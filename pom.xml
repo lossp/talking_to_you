@@ -11,6 +11,7 @@
     <modules>
         <module>server</module>
         <module>client</module>
+        <module>route</module>
     </modules>
 
     <name>demo</name>
@@ -53,6 +54,12 @@
             <groupId>commons-net</groupId>
             <artifactId>commons-net</artifactId>
             <version>3.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.0.0.Final</version>
         </dependency>
     </dependencies>
 
