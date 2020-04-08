@@ -1,4 +1,4 @@
-package lossp.servicesImp;
+package lossp.handler;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
