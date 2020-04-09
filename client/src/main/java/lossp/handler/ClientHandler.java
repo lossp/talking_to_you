@@ -1,34 +1,33 @@
-package lossp;
+package lossp.handler;
 
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lossp.message.Message;
 
-import java.util.Date;
-
 @ChannelHandler.Sharable
-public class EchoClientHandler extends SimpleChannelInboundHandler<Message> {
+public class ClientHandler extends SimpleChannelInboundHandler<Message> {
     @Override
     public void channelActive(ChannelHandlerContext context) {
-        Message message = new Message();
-        message.setUserId(12344);
-        message.setMessage("tell me about it");
-        message.setTime(new Date());
-        message.setDelay(10);
-        System.out.println(message);
-        context.writeAndFlush(message);
+        System.out.println("客户端启动中...");
+        context.writeAndFlush("客户端连接中");
     }
 
     @Override
     public void channelRead0(ChannelHandlerContext context, Message in) {
-        System.out.println("Receive: " + in);
+        System.out.println("Receive: = " + in);
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext context, Throwable cause) {
         cause.printStackTrace();
         context.close();
+    }
+
+    @Override
+    public void userEventTriggered(ChannelHandlerContext context, Object event) {
+        System.out.println("客户触发事件");
+
     }
 
 }

@@ -14,8 +14,8 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelReadComplete(ChannelHandlerContext context) {
-        context.writeAndFlush(Unpooled.EMPTY_BUFFER)
-                .addListener(ChannelFutureListener.CLOSE);
+        context.writeAndFlush(Unpooled.EMPTY_BUFFER);
+//                .addListener(ChannelFutureListener.CLOSE);
     }
 
     @Override
