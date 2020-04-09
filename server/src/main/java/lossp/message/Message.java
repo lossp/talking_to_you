@@ -1,8 +1,9 @@
 package lossp.message;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Message {
+public class Message implements Serializable {
     private long userId;
     private String message;
     private int delay;

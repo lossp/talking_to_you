@@ -1,16 +1,10 @@
 package lossp.handler;
 
-import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.*;
 
-public class ServerHandler extends SimpleChannelInboundHandler<ByteBuf> {
-    @Override
-    public void channelRead0(ChannelHandlerContext context, ByteBuf in) {
-
-    }
+@ChannelHandler.Sharable
+public class ServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext context, Object message) {

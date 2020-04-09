@@ -5,6 +5,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 import org.springframework.util.SerializationUtils;
 
+@Deprecated
 public class MessageEncoder extends MessageToByteEncoder {
     private Class<?> genericClass;
 
@@ -14,11 +15,11 @@ public class MessageEncoder extends MessageToByteEncoder {
 
     @Override
     public void encode(ChannelHandlerContext context, Object in, ByteBuf out) {
+        System.out.println("Server encoding...");
         if (genericClass.isInstance(in)) {
             byte[] data = SerializationUtils.serialize(in);
             out.writeInt(data.length);
             out.writeBytes(data);
         }
     }
-
 }

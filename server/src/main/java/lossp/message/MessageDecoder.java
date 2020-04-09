@@ -7,6 +7,7 @@ import org.springframework.util.SerializationUtils;
 
 import java.util.List;
 
+@Deprecated
 public class MessageDecoder extends ByteToMessageDecoder {
 
     private Class<?> genericClass;
@@ -16,10 +17,14 @@ public class MessageDecoder extends ByteToMessageDecoder {
 
     @Override
     public void decode(ChannelHandlerContext context, ByteBuf in, List<Object> out) {
+        System.out.println("Server decoding...");
+        System.out.println(in.readableBytes());
         if (in.readableBytes() < 4) { return; }
-        in.markReaderIndex();
-        int length = in.readInt();
 
+        // 标记一下当前的readIndex的位置
+        in.markReaderIndex();
+
+        int length = in.readInt();
         if (in.readableBytes() < length) {
             in.resetReaderIndex();
             return;
