@@ -1,26 +1,30 @@
 package lossp.serviceImp;
 
-import lossp.service.RouteService;
-import org.apache.zookeeper.WatchedEvent;
-import org.apache.zookeeper.Watcher;
-import org.apache.zookeeper.ZooKeeper;
+import lossp.service.RegisterService;
+import org.apache.zookeeper.*;
+import org.apache.zookeeper.data.Stat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 
-public class RouteServiceImp implements RouteService {
-    Logger logger = LoggerFactory.getLogger(RouteServiceImp.class);
+@Component
+public class RegisterServiceImp implements RegisterService {
+    Logger logger = LoggerFactory.getLogger(RegisterServiceImp.class);
     private CountDownLatch latch = new CountDownLatch(1);
     private ZooKeeper zooKeeper;
+    private ZooKeeper discoveryZooKeeper;
+    private final List<String> addressCache = new CopyOnWriteArrayList<>();
 
     @Value("${server.register.address}")
     private String address;
 
-    public RouteServiceImp() {
-
-    }
+    @Value("${server.register.path}")
+    private String registerPath;
 
     @Override
     public void register(String data) {
@@ -36,7 +40,13 @@ public class RouteServiceImp implements RouteService {
 
     @Override
     public void stop() {
-
+        if (zooKeeper != null) {
+            try {
+                zooKeeper.close();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -45,6 +55,7 @@ public class RouteServiceImp implements RouteService {
     }
 
     private ZooKeeper connectRegister() {
+        System.out.println("the address = " + address);
         ZooKeeper zk = null;
         try {
             zk = new ZooKeeper(address, 5000, new Watcher() {
@@ -67,10 +78,29 @@ public class RouteServiceImp implements RouteService {
     }
 
     private void addRootNode(ZooKeeper zooKeeper) {
-
+        try {
+            System.out.println("registerPath = " + registerPath);
+            Stat stat = zooKeeper.exists(registerPath, false);
+            if (stat == null) {
+                logger.info("adding root node... ... ...");
+                zooKeeper.create(registerPath, new byte[0], ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+            }
+        } catch (KeeperException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void createNode(ZooKeeper zooKeeper, String data) {
-
+        try {
+            byte[] infoBytes = data.getBytes();
+            String path = zooKeeper.create(registerPath + "/child", infoBytes, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
+            logger.info("after create node, the path = " + path);
+        } catch (KeeperException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
