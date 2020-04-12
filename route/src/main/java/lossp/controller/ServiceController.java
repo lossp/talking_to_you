@@ -2,7 +2,6 @@ package lossp.controller;
 
 
 import lossp.service.DiscoveryService;
-import lossp.serviceImp.DiscoveryServiceImp;
 import lossp.serviceImp.RegisterServiceImp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class RouteController {
-    Logger logger = LoggerFactory.getLogger(RouteController.class);
+public class ServiceController {
+    Logger logger = LoggerFactory.getLogger(ServiceController.class);
 
     @Autowired
     RegisterServiceImp routeServiceImp;
