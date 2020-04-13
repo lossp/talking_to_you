@@ -6,7 +6,7 @@ import lossp.valueObject.P2PMessageRequestVO;
 import lossp.valueObject.ServerInfoResVO;
 import org.springframework.stereotype.Component;
 
-@Component
+
 public interface RouteRequest {
     public void sendP2PMessage(P2PMessageRequestVO p2PMessageRequestVO) throws Exception;
 
