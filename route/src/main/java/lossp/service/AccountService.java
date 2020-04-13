@@ -1,12 +1,15 @@
 package lossp.service;
 
-import lossp.valueObject.GroupMessage;
+import lossp.valueObject.ChatMessageRequestVO;
 import lossp.valueObject.RegisterInfoResponse;
+import lossp.valueObject.ServerResponseVO;
 
 public interface AccountService {
     public RegisterInfoResponse register(RegisterInfoResponse info);
 
-    public void messagePush(String url, long userId, GroupMessage groupMessage) throws Exception;
+    public void messagePush(String url, Long userId, ChatMessageRequestVO groupMessage) throws Exception;
 
-    public void offLine(long userId) throws Exception;
+    public void offLine(Long userId) throws Exception;
+
+    public ServerResponseVO loadServerByUserId(Long userId);
 }

@@ -1,10 +1,10 @@
 package lossp.valueObject;
 
-public class GroupMessage {
+public class ChatMessageRequestVO {
     private long userId;
     private String message;
 
-    public GroupMessage(long userId, String message) {
+    public ChatMessageRequestVO(long userId, String message) {
         this.userId = userId;
         this.message = message;
     }
@@ -27,6 +27,6 @@ public class GroupMessage {
 
     @Override
     public String toString() {
-        return "GroupMessage:[ userId = " + userId + " ,message = " + message + "]";
+        return "ChatMessageRequestVO:[ userId = " + userId + " ,message = " + message + "]";
     }
 }
