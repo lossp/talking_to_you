@@ -8,6 +8,37 @@ public class ServerInfoResVO implements Serializable {
     private Object requestNo;
     private ServerInfo serverInfo;
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public Object getRequestNo() {
+        return requestNo;
+    }
+
+    public void setRequestNo(Object requestNo) {
+        this.requestNo = requestNo;
+    }
+
+    public ServerInfo getServerInfo() {
+        return serverInfo;
+    }
+
+    public void setServerInfo(ServerInfo serverInfo) {
+        this.serverInfo = serverInfo;
+    }
 
     public static class ServerInfo {
         private String ip;

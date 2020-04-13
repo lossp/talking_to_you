@@ -1,8 +1,13 @@
 package lossp.valueObject;
 
 public class LoginRequestVO {
-    private long userId;
+    private Long userId;
     private String username;
+
+    public LoginRequestVO(String username, Long userId) {
+        this.username = username;
+        this.userId = userId;
+    }
 
     public long getUserId() {
         return userId;

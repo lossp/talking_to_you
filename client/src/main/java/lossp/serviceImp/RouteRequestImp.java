@@ -1,5 +1,6 @@
 package lossp.serviceImp;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import lossp.service.RouteRequest;
 import lossp.valueObject.GroupMessageRequestVO;
@@ -22,8 +23,11 @@ public class RouteRequestImp implements RouteRequest {
 
     private MediaType mediaType = MediaType.parse("application/json");
 
-    @Value("${server.route.request.url}")
+    @Value("${server.route.p2p.request.url}")
     private String p2pRouteRequestUrl;
+
+    @Value("${server.route.login.request.url}")
+    private String userLoginRouteUrl;
 
     @Override
     public void sendP2PMessage(P2PMessageRequestVO p2PMessageRequestVO) throws Exception{
@@ -56,7 +60,26 @@ public class RouteRequestImp implements RouteRequest {
 
     @Override
     public ServerInfoResVO.ServerInfo getServer(LoginRequestVO loginRequestVO) throws Exception {
-        return null;
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", loginRequestVO.getUsername());
+        jsonObject.put("userId", loginRequestVO.getUserId());
+        RequestBody requestBody = RequestBody.create(mediaType, jsonObject.toString());
+
+        Request request = new Request.Builder().url(userLoginRouteUrl).post(requestBody).build();
+        Response response = httpClient.newCall(request).execute();
+        if (!response.isSuccessful()) {
+            throw new IOException("Unexpected code = " + response.code());
+        }
+        ResponseBody body = response.body();
+        ServerInfoResVO serverInfoResVO;
+        try {
+            String json = body.string();
+            serverInfoResVO = JSON.parseObject(json, ServerInfoResVO.class);
+        } finally {
+            body.close();
+        }
+
+        return serverInfoResVO.getServerInfo();
     }
 
     @Override
