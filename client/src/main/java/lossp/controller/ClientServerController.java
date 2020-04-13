@@ -31,5 +31,8 @@ public class ClientServerController {
         BaseResponse<NULLBody> response = new BaseResponse<>();
         clientServerImp.sendMessage(stringRequestVO.getMessage());
 
+        response.setMessage("message sent successfully");
+        response.setCode("SUCCESS");
+        return response;
     }
 }
