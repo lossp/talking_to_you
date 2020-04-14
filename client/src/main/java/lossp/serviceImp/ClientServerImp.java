@@ -14,6 +14,7 @@ import lossp.valueObject.ServerInfoResVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -26,31 +27,17 @@ public class ClientServerImp implements ClientServerCenter {
 //    private final String host = "127.0.0.1";
 //    private final int port = 3030;
     private SocketChannel channel;
+
+    @Value("${server.client.username}")
     private String userName;
+    @Value("${server.client.userId}")
     private Long userId;
 
     @Autowired
     private RouteRequest routeRequest;
 
-
-
-//    public ClientServerImp(String host, int port) {
-//        this.host = host;
-//        this.port = port;
-//    }
-
     @Override
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    @Override
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    @Override
-//    @PostConstruct
+    @PostConstruct
     public void start() throws Exception {
         // 登陆，获取可用的服务器
         ServerInfoResVO.ServerInfo serverInfo = userLogin();
@@ -60,6 +47,10 @@ public class ClientServerImp implements ClientServerCenter {
 
 
     public void startClient(ServerInfoResVO.ServerInfo serverInfo) throws Exception {
+        if (serverInfo == null) {
+            logger.error("cannot connect to the route server");
+            return;
+        }
         EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.group(eventLoopGroup)
