@@ -62,6 +62,7 @@ public class RouteRequestImp implements RouteRequest {
 
     @Override
     public ServerInfoResVO.ServerInfo getServer(LoginRequestVO loginRequestVO) throws Exception {
+        logger.info("get server at the moment, please wait a moment... ... ...");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", loginRequestVO.getUsername());
         jsonObject.put("userId", loginRequestVO.getUserId());

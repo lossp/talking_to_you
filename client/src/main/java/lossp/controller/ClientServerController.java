@@ -27,8 +27,13 @@ public class ClientServerController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/sendMessage")
-    public BaseResponse<NULLBody> sendMessage(@RequestBody StringRequestVO stringRequestVO) {
+    public BaseResponse<NULLBody> sendMessage(@RequestBody StringRequestVO stringRequestVO) throws Exception {
         BaseResponse<NULLBody> response = new BaseResponse<>();
+        // TODO 需要setUsername以及setUserId
+        Long userId = new Long((long)1);
+        clientServerImp.setUserId(userId);
+        clientServerImp.setUserName("telleme");
+        clientServerImp.start();
         clientServerImp.sendMessage(stringRequestVO.getMessage());
 
         response.setMessage("message sent successfully");

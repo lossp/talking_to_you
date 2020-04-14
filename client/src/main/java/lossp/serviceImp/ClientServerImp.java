@@ -39,16 +39,18 @@ public class ClientServerImp implements ClientServerCenter {
 //        this.port = port;
 //    }
 
+    @Override
     public void setUserName(String userName) {
         this.userName = userName;
     }
 
+    @Override
     public void setUserId(Long userId) {
         this.userId = userId;
     }
 
     @Override
-    @PostConstruct
+//    @PostConstruct
     public void start() throws Exception {
         // 登陆，获取可用的服务器
         ServerInfoResVO.ServerInfo serverInfo = userLogin();

@@ -9,4 +9,8 @@ public interface ClientServerCenter {
     public void close();
 
     public void sendMessage(String message);
+
+    public void setUserName(String username);
+
+    public void setUserId(Long userId);
 }
