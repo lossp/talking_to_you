@@ -17,17 +17,11 @@ public class ClientServerController {
     @Autowired
     private ClientServerCenter clientServerImp;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/client")
-    public String hello() {
-        Logger logger = LoggerFactory.getLogger(ClientServerController.class);
-        logger.info("Enterring clientController");
-//        clientServerImp.sendMessage();
-        return "Client Hello";
-    }
 
     @RequestMapping(method = RequestMethod.POST, value = "/sendMessage")
     public BaseResponse<NULLBody> sendMessage(@RequestBody StringRequestVO stringRequestVO) throws Exception {
         BaseResponse<NULLBody> response = new BaseResponse<>();
+        clientServerImp.start();
         clientServerImp.sendMessage(stringRequestVO.getMessage());
 
         response.setMessage("message sent successfully");
@@ -39,7 +33,6 @@ public class ClientServerController {
     public BaseResponse<NULLBody> login(@RequestBody LoginRequestVO loginRequestVO) throws Exception {
         logger.info(loginRequestVO.toString());
         BaseResponse<NULLBody> response = new BaseResponse<>();
-//        clientServerImp.start();
         ServerResponseVO serverInfo = clientServerImp.userLogin(loginRequestVO.getUsername(), loginRequestVO.getUserId());
         logger.info(serverInfo.toString());
         response.setMessage("login successfully");

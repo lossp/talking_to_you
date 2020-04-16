@@ -10,7 +10,7 @@ import lossp.handler.ClientHandlerInitializer;
 import lossp.service.ClientServerCenter;
 import lossp.service.RouteRequest;
 import lossp.valueObject.LoginRequestVO;
-import lossp.valueObject.ServerInfoResVO;
+
 import lossp.valueObject.ServerResponseVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,15 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.net.InetSocketAddress;
 
 @Component
 public class ClientServerImp implements ClientServerCenter {
     Logger logger = LoggerFactory.getLogger(ClientServerImp.class);
-    //TODO 测试用途，以后需要将寻址交由Route模块处理，同时channel同样需要route进行处理
-//    private final String host = "127.0.0.1";
-//    private final int port = 3030;
     private SocketChannel channel;
 
     @Value("${server.client.username}")
@@ -37,19 +33,21 @@ public class ClientServerImp implements ClientServerCenter {
     @Autowired
     private RouteRequest routeRequest;
 
+    private ServerResponseVO serverResponseVO;
+
     @Override
-    public void start() throws Exception {
-        // 登陆，获取可用的服务器
-        ServerResponseVO serverInfo = userLogin();
-        startClient(serverInfo);
+    public void start() {
+        try {
+            if (serverResponseVO == null) throw new IllegalArgumentException("Server info needs to initialized first, please login in");
+            startClient(serverResponseVO);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            logger.error("连接客户端失败");
+        }
 
     }
 
-    public void startClient(ServerResponseVO serverInfo) throws Exception {
-        if (serverInfo == null) {
-            logger.error("cannot connect to the route server");
-            return;
-        }
+    private void startClient(ServerResponseVO serverInfo) throws Exception {
         EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.group(eventLoopGroup)
@@ -64,11 +62,9 @@ public class ClientServerImp implements ClientServerCenter {
 
     @Override
     public void sendMessage(String message) {
-        //TODO 原来测试与Server交互的代码，目前仅仅注释掉
         MessageScanner messageScanner = new MessageScanner(channel);
         Thread thread = new Thread(messageScanner);
         thread.start();
-
     }
 
     @Override
@@ -93,6 +89,7 @@ public class ClientServerImp implements ClientServerCenter {
         ServerResponseVO serverInfo = null;
         try {
             serverInfo = routeRequest.getServer(loginRequestVO);
+            serverResponseVO = serverInfo;
             return serverInfo;
         } catch (Exception e) {
             e.printStackTrace();

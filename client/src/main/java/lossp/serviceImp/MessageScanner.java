@@ -1,12 +1,10 @@
 package lossp.serviceImp;
 
-import io.netty.channel.ChannelFuture;
 import io.netty.channel.socket.SocketChannel;
 import lossp.service.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-//import java.nio.channels.SocketChannel;
 import java.util.Scanner;
 
 public class MessageScanner implements Runnable {
