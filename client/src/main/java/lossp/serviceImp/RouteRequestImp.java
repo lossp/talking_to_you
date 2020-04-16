@@ -3,10 +3,7 @@ package lossp.serviceImp;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import lossp.service.RouteRequest;
-import lossp.valueObject.GroupMessageRequestVO;
-import lossp.valueObject.LoginRequestVO;
-import lossp.valueObject.P2PMessageRequestVO;
-import lossp.valueObject.ServerInfoResVO;
+import lossp.valueObject.*;
 import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,7 +58,7 @@ public class RouteRequestImp implements RouteRequest {
     }
 
     @Override
-    public ServerInfoResVO.ServerInfo getServer(LoginRequestVO loginRequestVO) throws Exception {
+    public ServerResponseVO getServer(LoginRequestVO loginRequestVO) throws Exception {
         logger.info("get server at the moment, please wait a moment... ... ...");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", loginRequestVO.getUsername());
@@ -74,15 +71,16 @@ public class RouteRequestImp implements RouteRequest {
             throw new IOException("Unexpected code = " + response.code());
         }
         ResponseBody body = response.body();
-        ServerInfoResVO serverInfoResVO;
+        System.out.println("==========  ------- --- " + body.string());
+        ServerResponseVO serverResponse;
         try {
             String json = body.string();
-            serverInfoResVO = JSON.parseObject(json, ServerInfoResVO.class);
+            serverResponse = JSON.parseObject(json, ServerResponseVO.class);
         } finally {
             body.close();
         }
 
-        return serverInfoResVO.getServerInfo();
+        return serverResponse;
     }
 
     @Override

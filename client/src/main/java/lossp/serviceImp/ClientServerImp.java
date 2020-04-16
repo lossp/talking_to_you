@@ -11,6 +11,7 @@ import lossp.service.ClientServerCenter;
 import lossp.service.RouteRequest;
 import lossp.valueObject.LoginRequestVO;
 import lossp.valueObject.ServerInfoResVO;
+import lossp.valueObject.ServerResponseVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,12 +40,12 @@ public class ClientServerImp implements ClientServerCenter {
     @Override
     public void start() throws Exception {
         // 登陆，获取可用的服务器
-        ServerInfoResVO.ServerInfo serverInfo = userLogin();
+        ServerResponseVO serverInfo = userLogin();
         startClient(serverInfo);
 
     }
 
-    public void startClient(ServerInfoResVO.ServerInfo serverInfo) throws Exception {
+    public void startClient(ServerResponseVO serverInfo) throws Exception {
         if (serverInfo == null) {
             logger.error("cannot connect to the route server");
             return;
@@ -75,9 +76,9 @@ public class ClientServerImp implements ClientServerCenter {
     }
 
 
-    private ServerInfoResVO.ServerInfo userLogin() {
+    private ServerResponseVO userLogin() {
         LoginRequestVO loginRequestVO = new LoginRequestVO(this.userName, this.userId);
-        ServerInfoResVO.ServerInfo serverInfo = null;
+        ServerResponseVO serverInfo = null;
         try {
             serverInfo = routeRequest.getServer(loginRequestVO);
             return serverInfo;
@@ -87,9 +88,9 @@ public class ClientServerImp implements ClientServerCenter {
         return null;
     }
 
-    public ServerInfoResVO.ServerInfo userLogin(String userName, Long userId) {
+    public ServerResponseVO userLogin(String userName, Long userId) {
         LoginRequestVO loginRequestVO = new LoginRequestVO(userName, userId);
-        ServerInfoResVO.ServerInfo serverInfo = null;
+        ServerResponseVO serverInfo = null;
         try {
             serverInfo = routeRequest.getServer(loginRequestVO);
             return serverInfo;

@@ -1,9 +1,6 @@
 package lossp.service;
 
-import lossp.valueObject.GroupMessageRequestVO;
-import lossp.valueObject.LoginRequestVO;
-import lossp.valueObject.P2PMessageRequestVO;
-import lossp.valueObject.ServerInfoResVO;
+import lossp.valueObject.*;
 import org.springframework.stereotype.Component;
 
 
@@ -12,7 +9,7 @@ public interface RouteRequest {
 
     public void sendGroupMessage(GroupMessageRequestVO groupMessageRequestVO);
 
-    public ServerInfoResVO.ServerInfo getServer(LoginRequestVO loginReqVO) throws Exception;
+    public ServerResponseVO getServer(LoginRequestVO loginReqVO) throws Exception;
 
     public void offLine();
 

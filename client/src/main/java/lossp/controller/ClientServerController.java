@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ClientServerController {
+    Logger logger = LoggerFactory.getLogger(ClientServerController.class);
+
     @Autowired
     private ClientServerCenter clientServerImp;
 
@@ -38,8 +40,9 @@ public class ClientServerController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/login")
     public BaseResponse<NULLBody> login(@RequestBody LoginRequestVO loginRequestVO) throws Exception {
+        logger.info(loginRequestVO.toString());
         BaseResponse<NULLBody> response = new BaseResponse<>();
-        clientServerImp.start();
+//        clientServerImp.start();
         clientServerImp.userLogin(loginRequestVO.getUsername(), loginRequestVO.getUserId());
         response.setMessage("login successfully");
         response.setCode("SUCCESS");

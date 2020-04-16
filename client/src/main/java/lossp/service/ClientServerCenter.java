@@ -1,6 +1,6 @@
 package lossp.service;
 
-import lossp.valueObject.ServerInfoResVO;
+import lossp.valueObject.ServerResponseVO;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -11,5 +11,5 @@ public interface ClientServerCenter {
 
     public void sendMessage(String message);
 
-    public ServerInfoResVO.ServerInfo userLogin(String username, Long userId);
+    public ServerResponseVO userLogin(String username, Long userId);
 }

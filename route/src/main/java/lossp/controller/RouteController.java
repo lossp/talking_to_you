@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ServiceController {
-    Logger logger = LoggerFactory.getLogger(ServiceController.class);
+public class RouteController {
+    Logger logger = LoggerFactory.getLogger(RouteController.class);
 
     @Autowired
     RegisterServiceImp routeServiceImp;
@@ -55,10 +55,12 @@ public class ServiceController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/login")
-    public BaseResponse<NULLBody> login(@RequestBody LoginRequestVO loginRequestVO) throws Exception {
+    public ServerResponseVO login(@RequestBody LoginRequestVO loginRequestVO) throws Exception {
+        logger.info("Entering Route controller, login request is processing at the moment ... ... ...");
         BaseResponse<NULLBody> response = new BaseResponse<>();
         logger.info(loginRequestVO.toString());
-        accountService.loadServerByUserId(loginRequestVO.getUserId());
-        return null;
+        ServerResponseVO serverResponseVO = accountService.loadServerByUserId(loginRequestVO.getUserId());
+        logger.info(serverResponseVO.toString());
+        return serverResponseVO;
     }
 }
