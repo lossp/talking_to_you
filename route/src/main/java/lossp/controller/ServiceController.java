@@ -53,4 +53,12 @@ public class ServiceController {
         response.setMessage("p2p发送消息成功");
         return response;
     }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/login")
+    public BaseResponse<NULLBody> login(@RequestBody LoginRequestVO loginRequestVO) throws Exception {
+        BaseResponse<NULLBody> response = new BaseResponse<>();
+        logger.info(loginRequestVO.toString());
+        accountService.loadServerByUserId(loginRequestVO.getUserId());
+        return null;
+    }
 }

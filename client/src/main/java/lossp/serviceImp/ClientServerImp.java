@@ -37,14 +37,12 @@ public class ClientServerImp implements ClientServerCenter {
     private RouteRequest routeRequest;
 
     @Override
-    @PostConstruct
     public void start() throws Exception {
         // 登陆，获取可用的服务器
         ServerInfoResVO.ServerInfo serverInfo = userLogin();
         startClient(serverInfo);
 
     }
-
 
     public void startClient(ServerInfoResVO.ServerInfo serverInfo) throws Exception {
         if (serverInfo == null) {
@@ -78,6 +76,18 @@ public class ClientServerImp implements ClientServerCenter {
 
 
     private ServerInfoResVO.ServerInfo userLogin() {
+        LoginRequestVO loginRequestVO = new LoginRequestVO(this.userName, this.userId);
+        ServerInfoResVO.ServerInfo serverInfo = null;
+        try {
+            serverInfo = routeRequest.getServer(loginRequestVO);
+            return serverInfo;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ServerInfoResVO.ServerInfo userLogin(String userName, Long userId) {
         LoginRequestVO loginRequestVO = new LoginRequestVO(userName, userId);
         ServerInfoResVO.ServerInfo serverInfo = null;
         try {

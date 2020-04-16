@@ -1,8 +1,8 @@
 package lossp.controller;
 
 import lossp.service.ClientServerCenter;
-import lossp.serviceImp.ClientServerImp;
 import lossp.valueObject.BaseResponse;
+import lossp.valueObject.LoginRequestVO;
 import lossp.valueObject.NULLBody;
 import lossp.valueObject.StringRequestVO;
 import org.slf4j.Logger;
@@ -32,6 +32,16 @@ public class ClientServerController {
         clientServerImp.sendMessage(stringRequestVO.getMessage());
 
         response.setMessage("message sent successfully");
+        response.setCode("SUCCESS");
+        return response;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/login")
+    public BaseResponse<NULLBody> login(@RequestBody LoginRequestVO loginRequestVO) throws Exception {
+        BaseResponse<NULLBody> response = new BaseResponse<>();
+        clientServerImp.start();
+        clientServerImp.userLogin(loginRequestVO.getUsername(), loginRequestVO.getUserId());
+        response.setMessage("login successfully");
         response.setCode("SUCCESS");
         return response;
     }
