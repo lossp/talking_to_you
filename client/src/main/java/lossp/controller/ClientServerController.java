@@ -1,10 +1,7 @@
 package lossp.controller;
 
 import lossp.service.ClientServerCenter;
-import lossp.valueObject.BaseResponse;
-import lossp.valueObject.LoginRequestVO;
-import lossp.valueObject.NULLBody;
-import lossp.valueObject.StringRequestVO;
+import lossp.valueObject.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +40,8 @@ public class ClientServerController {
         logger.info(loginRequestVO.toString());
         BaseResponse<NULLBody> response = new BaseResponse<>();
 //        clientServerImp.start();
-        clientServerImp.userLogin(loginRequestVO.getUsername(), loginRequestVO.getUserId());
+        ServerResponseVO serverInfo = clientServerImp.userLogin(loginRequestVO.getUsername(), loginRequestVO.getUserId());
+        logger.info(serverInfo.toString());
         response.setMessage("login successfully");
         response.setCode("SUCCESS");
         return response;

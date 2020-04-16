@@ -71,7 +71,6 @@ public class RouteRequestImp implements RouteRequest {
             throw new IOException("Unexpected code = " + response.code());
         }
         ResponseBody body = response.body();
-        System.out.println("==========  ------- --- " + body.string());
         ServerResponseVO serverResponse;
         try {
             String json = body.string();
