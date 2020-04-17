@@ -11,6 +11,7 @@ import lossp.service.ClientServerCenter;
 import lossp.service.RouteRequest;
 import lossp.valueObject.LoginRequestVO;
 
+
 import lossp.valueObject.ServerResponseVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +47,7 @@ public class ClientServerImp implements ClientServerCenter {
         }
 
     }
+
 
     private void startClient(ServerResponseVO serverInfo) throws Exception {
         EventLoopGroup eventLoopGroup = new NioEventLoopGroup();

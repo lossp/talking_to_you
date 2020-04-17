@@ -2,12 +2,17 @@ package lossp.servicesImp;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.channel.socket.nio.NioSocketChannel;
 import lossp.handler.ServerHandlerInitializer;
 import lossp.services.Server;
+import lossp.session.SessionHolder;
+import lossp.valueObject.P2PMessageRequestVO;
+import lossp.valueObject.P2PMessageResponseVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -62,6 +67,14 @@ public class ServerImp implements Server {
         mainReactor.shutdownGracefully().syncUninterruptibly();
         subReactor.shutdownGracefully().syncUninterruptibly();
         logger.info("Server is closed");
+    }
+
+    @Override
+    public P2PMessageResponseVO sendP2PMessage(P2PMessageRequestVO p2PMessageRequestVO) {
+        NioSocketChannel nioSocketChannel = SessionHolder.getChannel(p2PMessageRequestVO.getUserId());
+        ChannelFuture future = nioSocketChannel.writeAndFlush(p2PMessageRequestVO);
+        future.addListener((ChannelFutureListener) channelFuture -> logger.info("server push msg:[{}]", p2PMessageRequestVO.toString()));
+        return new P2PMessageResponseVO();
     }
 
 }
