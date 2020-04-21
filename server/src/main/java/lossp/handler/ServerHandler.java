@@ -16,15 +16,9 @@ public class ServerHandler extends SimpleChannelInboundHandler<RequestProto.Requ
 
     @Override
     protected void channelRead0(ChannelHandlerContext context, RequestProto.Request in) {
-        logger.info("Receiving message = [{}]", in.getMessage());
-        // TODO 填充存入
-    }
-
-    @Override
-    public void channelRead(ChannelHandlerContext context, Object message) {
-        RequestProto.Request in = (RequestProto.Request) message;
-        System.out.println("Server received:" + in.getMessage());
+        logger.info("Receiving message = [{}], type = [{}]", in.getMessage(), in.getType());
         context.write(in);
+        // TODO 填充存入
     }
 
     @Override
