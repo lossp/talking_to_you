@@ -16,14 +16,15 @@ public class ServerHandler extends SimpleChannelInboundHandler<RequestProto.Requ
 
     @Override
     protected void channelRead0(ChannelHandlerContext context, RequestProto.Request in) {
-        logger.info("Receiving message = [{}]", in);
+        logger.info("Receiving message = [{}]", in.getMessage());
         // TODO 填充存入
     }
 
     @Override
     public void channelRead(ChannelHandlerContext context, Object message) {
-        System.out.println("Server received:" + message);
-        context.write(message);
+        RequestProto.Request in = (RequestProto.Request) message;
+        System.out.println("Server received:" + in.getMessage());
+        context.write(in);
     }
 
     @Override
