@@ -4,11 +4,12 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lossp.message.Message;
+import lossp.proto.RequestProto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @ChannelHandler.Sharable
-public class ClientHandler extends SimpleChannelInboundHandler<Message> {
+public class ClientHandler extends SimpleChannelInboundHandler<RequestProto.Request> {
     Logger logger = LoggerFactory.getLogger(ClientHandler.class);
     @Override
     public void channelActive(ChannelHandlerContext context) {
@@ -17,7 +18,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<Message> {
     }
 
     @Override
-    public void channelRead0(ChannelHandlerContext context, Message in) { logger.info("Receive: = " + in); }
+    public void channelRead0(ChannelHandlerContext context, RequestProto.Request in) { logger.info("Receive: = " + in); }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext context, Throwable cause) {

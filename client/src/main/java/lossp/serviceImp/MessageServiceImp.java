@@ -4,6 +4,7 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.socket.SocketChannel;
 import lossp.message.Message;
+import lossp.proto.RequestProto;
 import lossp.service.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,11 +19,10 @@ public class MessageServiceImp implements MessageService {
     @Override
     public void sendMessage(String message, SocketChannel socketChannel) {
         //TODO 仅仅测试数据
-        Message msg = new Message();
-        msg.setTime(new Date());
-        msg.setDelay(10);
+        RequestProto.Request.Builder msg = RequestProto.Request.newBuilder();
+        msg.setRequestId(123444);
         msg.setMessage(message);
-        msg.setUserId(123444);
+        msg.setType("LOGIN");
 
         ChannelFuture f = socketChannel.writeAndFlush(msg);
         f.addListener((ChannelFutureListener) channelFuture -> logger.info("客户端手动发消息成功={}", msg));

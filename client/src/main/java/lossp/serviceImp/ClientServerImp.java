@@ -52,9 +52,10 @@ public class ClientServerImp implements ClientServerCenter {
     private void startClient(ServerResponseVO serverInfo) throws Exception {
         EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
         Bootstrap bootstrap = new Bootstrap();
+        logger.info("连接中: ip = " + serverInfo.getIp() + " : " + serverInfo.getServerPort());
         bootstrap.group(eventLoopGroup)
                 .channel(NioSocketChannel.class)
-                .remoteAddress(new InetSocketAddress(serverInfo.getIp(), serverInfo.getHttpPort()))
+                .remoteAddress(new InetSocketAddress(serverInfo.getIp(), serverInfo.getServerPort()))
                 .handler(new ClientHandlerInitializer());
         // TODO this line here is very very important
         ChannelFuture future = bootstrap.connect().sync();

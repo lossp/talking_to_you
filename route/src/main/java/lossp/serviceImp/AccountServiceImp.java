@@ -39,7 +39,7 @@ public class AccountServiceImp implements AccountService {
         ServerResponseVO serverResponseVO = new ServerResponseVO();
         serverResponseVO.setIp("127.0.0.1");
         serverResponseVO.setHttpPort(3004);
-        serverResponseVO.setServerPort(2222);
+        serverResponseVO.setServerPort(3030);
 
         return serverResponseVO;
     }
