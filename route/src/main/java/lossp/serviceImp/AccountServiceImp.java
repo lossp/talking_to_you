@@ -63,7 +63,7 @@ public class AccountServiceImp implements AccountService {
         // TODO 仅仅作为测试数据，之后需要从Mysql | redis中获取，通过userID映射获取到的服务器信息
         ServerResponseVO serverResponseVO = new ServerResponseVO();
         serverResponseVO.setIp("127.0.0.1");
-        serverResponseVO.setHttpPort(3004);
+        serverResponseVO.setHttpPort(3000);
         serverResponseVO.setServerPort(3030);
 
         return serverResponseVO;

@@ -14,12 +14,13 @@ import java.util.LinkedList;
 
 @RestController
 public class ServerController {
+    Logger logger = LoggerFactory.getLogger(ServerController.class);
+
     @Autowired
     Server serverImp;
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String hello() {
-        Logger logger = LoggerFactory.getLogger(ServerController.class);
         logger.info("Enterring");
         logger.info("Server status: " + serverImp.isRunning());
         return "Hello";
@@ -27,6 +28,7 @@ public class ServerController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/sendMessage")
     public String sendMessage(@RequestBody P2PMessageRequestVO p2PMessageRequestVO) {
+        logger.info("p2p message request = [{}]", p2PMessageRequestVO);
         serverImp.sendP2PMessage(p2PMessageRequestVO);
 
         return "OK";

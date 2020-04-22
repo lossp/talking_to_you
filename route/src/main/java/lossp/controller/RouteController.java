@@ -42,12 +42,13 @@ public class RouteController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/p2pRoute")
     public BaseResponse<NULLBody> p2pRoute(@RequestBody P2PRequestVO p2pRequestVO) throws Exception{
+        logger.info("P2P Request = [{}]", p2pRequestVO);
         BaseResponse<NULLBody> response = new BaseResponse<>();
         // TODO 1. 获取推送消息的路由服务器信息
         ServerResponseVO serverResponseVO = accountService.loadServerByUserId(p2pRequestVO.getReceivedUserId());
         String url = "http://" + serverResponseVO.getIp() + ":" + serverResponseVO.getHttpPort() + "/sendMessage";
         // TODO 2. 推送消息
-        ChatMessageRequestVO chatMessageRequestVO = new ChatMessageRequestVO(p2pRequestVO.getUserId(), p2pRequestVO.getMessage());
+        ChatMessageRequestVO chatMessageRequestVO = new ChatMessageRequestVO(p2pRequestVO.getReceivedUserId(), p2pRequestVO.getMessage());
         accountService.messagePush(url,p2pRequestVO.getUserId(), chatMessageRequestVO );
         response.setCode("SUCCESS");
         response.setMessage("p2p发送消息成功");
