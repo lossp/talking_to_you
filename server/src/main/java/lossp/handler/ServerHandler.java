@@ -1,7 +1,9 @@
 package lossp.handler;
 
 import io.netty.channel.*;
+import io.netty.channel.socket.nio.NioSocketChannel;
 import lossp.proto.RequestProto;
+import lossp.session.SessionHolder;
 import okhttp3.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +19,22 @@ public class ServerHandler extends SimpleChannelInboundHandler<RequestProto.Requ
     @Override
     protected void channelRead0(ChannelHandlerContext context, RequestProto.Request in) {
         logger.info("Receiving message = [{}], type = [{}]", in.getMessage(), in.getType());
+        if (in.getType().equals("LOGIN")) {
+            SessionHolder.saveChannel(Long.valueOf(in.getRequestId()), (NioSocketChannel) context.channel());
+            SessionHolder.saveSession(Long.valueOf(in.getRequestId()), in.getMessage());
+            logger.info("client [{}] online success", in.getMessage());
+        }
+
+        if (in.getType().equals("PING")) {
+
+        }
+
         context.write(in);
         // TODO 填充存入
     }
+
+
+
 
     @Override
     public void exceptionCaught(ChannelHandlerContext context, Throwable cause) {

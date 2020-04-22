@@ -1,18 +1,28 @@
 package lossp.serviceImp;
 
+import com.alibaba.fastjson.JSONObject;
 import lossp.service.AccountService;
 import lossp.valueObject.ChatMessageRequestVO;
 import lossp.valueObject.RegisterInfoResponse;
 import lossp.valueObject.ServerResponseVO;
+import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 import static lossp.constant.Constant.ACCOUNT_PREFIX;
 
 @Component
 public class AccountServiceImp implements AccountService {
     Logger logger = LoggerFactory.getLogger(AccountServiceImp.class);
+
+    private MediaType mediaType = MediaType.parse("application/json");
+
+    @Autowired
+    private OkHttpClient okHttpClient;
 
     @Override
     public RegisterInfoResponse register(RegisterInfoResponse info) {
@@ -30,7 +40,22 @@ public class AccountServiceImp implements AccountService {
 
     @Override
     public void messagePush(String url, Long userId, ChatMessageRequestVO groupMessage) throws Exception {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("message", userId + ":" + groupMessage.getMessage());
+        jsonObject.put("userId", groupMessage.getUserId());
+        RequestBody requestBody = RequestBody.create(mediaType, jsonObject.toString());
 
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+
+        Response response = okHttpClient.newCall(request).execute();
+        try {
+            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+        } finally {
+            response.body().close();
+        }
     }
 
     @Override

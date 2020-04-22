@@ -2,10 +2,10 @@ package lossp.controllers;
 
 import lossp.services.Server;
 import lossp.valueObject.P2PMessageRequestVO;
-import lossp.valueObject.P2PMessageResponseVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,9 +25,10 @@ public class ServerController {
         return "Hello";
     }
 
-    @RequestMapping
-    public P2PMessageResponseVO sendMessage(P2PMessageRequestVO p2PMessageRequestVO) {
+    @RequestMapping(method = RequestMethod.POST, value = "/sendMessage")
+    public String sendMessage(@RequestBody P2PMessageRequestVO p2PMessageRequestVO) {
         serverImp.sendP2PMessage(p2PMessageRequestVO);
-        return new P2PMessageResponseVO();
+
+        return "OK";
     }
 }

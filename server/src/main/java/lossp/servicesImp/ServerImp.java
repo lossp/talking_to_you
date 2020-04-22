@@ -9,6 +9,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import lossp.handler.ServerHandlerInitializer;
+import lossp.proto.RequestProto;
 import lossp.services.Server;
 import lossp.session.SessionHolder;
 import lossp.valueObject.P2PMessageRequestVO;
@@ -75,6 +76,22 @@ public class ServerImp implements Server {
         ChannelFuture future = nioSocketChannel.writeAndFlush(p2PMessageRequestVO);
         future.addListener((ChannelFutureListener) channelFuture -> logger.info("server push msg:[{}]", p2PMessageRequestVO.toString()));
         return new P2PMessageResponseVO();
+    }
+
+
+    // 主要由服务器来推送消息
+    public void sendMessage(P2PMessageRequestVO p2PMessageRequestVO) {
+        NioSocketChannel socketChannel = SessionHolder.getChannel(p2PMessageRequestVO.getUserId());
+        if (socketChannel == null) {
+            logger.info("client {} offline!", p2PMessageRequestVO.getUserId());
+        }
+        RequestProto.Request request = RequestProto.Request.newBuilder()
+                .setRequestId((int) p2PMessageRequestVO.getUserId().longValue())
+                .setMessage("测试发送消息")
+                .setType("MSG")
+                .build();
+        ChannelFuture future = socketChannel.writeAndFlush(request);
+        future.addListener((ChannelFutureListener) channelFuture -> logger.info("Server push message: [{}]", p2PMessageRequestVO.toString()));
     }
 
 }

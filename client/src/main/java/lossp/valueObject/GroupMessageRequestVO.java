@@ -1,8 +1,13 @@
 package lossp.valueObject;
 
 public class GroupMessageRequestVO {
-    private long userId;
+    private Long userId;
     private String message;
+
+    public GroupMessageRequestVO(Long userId, String message) {
+        this.message = message;
+        this.userId = userId;
+    }
 
     public long getUserId() {
         return userId;
