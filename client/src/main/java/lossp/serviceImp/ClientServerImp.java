@@ -16,7 +16,6 @@ import lossp.valueObject.ServerResponseVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.net.InetSocketAddress;
@@ -25,10 +24,6 @@ import java.net.InetSocketAddress;
 public class ClientServerImp implements ClientServerCenter {
     Logger logger = LoggerFactory.getLogger(ClientServerImp.class);
     private SocketChannel channel;
-
-    @Value("${server.client.username}")
-    private String userName;
-    @Value("${server.client.userId}")
     private Long userId;
 
     @Autowired
@@ -64,8 +59,8 @@ public class ClientServerImp implements ClientServerCenter {
     }
 
     @Override
-    public void sendMessage(String message) {
-        MessageScanner messageScanner = new MessageScanner(channel);
+    public void sendMessage(String message, Long receiveUserId) {
+        MessageScanner messageScanner = new MessageScanner(channel, userId, receiveUserId);
         Thread thread = new Thread(messageScanner);
         thread.start();
     }
@@ -75,24 +70,13 @@ public class ClientServerImp implements ClientServerCenter {
     }
 
 
-    private ServerResponseVO userLogin() {
-        LoginRequestVO loginRequestVO = new LoginRequestVO(this.userName, this.userId);
-        ServerResponseVO serverInfo = null;
-        try {
-            serverInfo = routeRequest.getServer(loginRequestVO);
-            return serverInfo;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     public ServerResponseVO userLogin(String userName, Long userId) {
         LoginRequestVO loginRequestVO = new LoginRequestVO(userName, userId);
         ServerResponseVO serverInfo = null;
         try {
             serverInfo = routeRequest.getServer(loginRequestVO);
             serverResponseVO = serverInfo;
+            this.userId = userId;
             return serverInfo;
         } catch (Exception e) {
             e.printStackTrace();

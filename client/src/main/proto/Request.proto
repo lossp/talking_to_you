@@ -2,6 +2,7 @@ option java_outer_classname = "RequestProto";
 option java_package = "lossp.proto";
 message Request {
     required int32 requestId = 1;
-    required string message = 2;
-    required string type = 3;
+    required int32 userId = 2;
+    required string message = 3;
+    required string type = 4;
 }

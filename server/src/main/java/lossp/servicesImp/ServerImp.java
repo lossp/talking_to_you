@@ -72,7 +72,11 @@ public class ServerImp implements Server {
 
     @Override
     public P2PMessageResponseVO sendP2PMessage(P2PMessageRequestVO p2PMessageRequestVO) {
+        String result = SessionHolder.printChannelMap();
+        System.out.println("========sss " + result);
         NioSocketChannel nioSocketChannel = SessionHolder.getChannel(p2PMessageRequestVO.getUserId());
+
+        if (nioSocketChannel == null) throw new IllegalArgumentException("该用户对应的channel不存在");
         ChannelFuture future = nioSocketChannel.writeAndFlush(p2PMessageRequestVO);
         future.addListener((ChannelFutureListener) channelFuture -> logger.info("server push msg:[{}]", p2PMessageRequestVO.toString()));
         return new P2PMessageResponseVO();

@@ -26,7 +26,7 @@ public class ClientServerController {
     public BaseResponse<NULLBody> sendMessage(@RequestBody StringRequestVO stringRequestVO) throws Exception {
         BaseResponse<NULLBody> response = new BaseResponse<>();
         clientServerImp.start();
-        clientServerImp.sendMessage(stringRequestVO.getMessage());
+        clientServerImp.sendMessage(stringRequestVO.getMessage(), stringRequestVO.getReceiveUserId());
 
         response.setMessage("message sent successfully");
         response.setCode("SUCCESS");

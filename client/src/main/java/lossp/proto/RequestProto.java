@@ -28,29 +28,38 @@ public final class RequestProto {
     int getRequestId();
 
     /**
-     * <code>required string message = 2;</code>
+     * <code>required int32 userId = 2;</code>
+     */
+    boolean hasUserId();
+    /**
+     * <code>required int32 userId = 2;</code>
+     */
+    int getUserId();
+
+    /**
+     * <code>required string message = 3;</code>
      */
     boolean hasMessage();
     /**
-     * <code>required string message = 2;</code>
+     * <code>required string message = 3;</code>
      */
     java.lang.String getMessage();
     /**
-     * <code>required string message = 2;</code>
+     * <code>required string message = 3;</code>
      */
     com.google.protobuf.ByteString
         getMessageBytes();
 
     /**
-     * <code>required string type = 3;</code>
+     * <code>required string type = 4;</code>
      */
     boolean hasType();
     /**
-     * <code>required string type = 3;</code>
+     * <code>required string type = 4;</code>
      */
     java.lang.String getType();
     /**
-     * <code>required string type = 3;</code>
+     * <code>required string type = 4;</code>
      */
     com.google.protobuf.ByteString
         getTypeBytes();
@@ -69,6 +78,7 @@ public final class RequestProto {
     }
     private Request() {
       requestId_ = 0;
+      userId_ = 0;
       message_ = "";
       type_ = "";
     }
@@ -102,15 +112,20 @@ public final class RequestProto {
               requestId_ = input.readInt32();
               break;
             }
-            case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
+            case 16: {
               bitField0_ |= 0x00000002;
-              message_ = bs;
+              userId_ = input.readInt32();
               break;
             }
             case 26: {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000004;
+              message_ = bs;
+              break;
+            }
+            case 34: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000008;
               type_ = bs;
               break;
             }
@@ -162,16 +177,31 @@ public final class RequestProto {
       return requestId_;
     }
 
-    public static final int MESSAGE_FIELD_NUMBER = 2;
-    private volatile java.lang.Object message_;
+    public static final int USERID_FIELD_NUMBER = 2;
+    private int userId_;
     /**
-     * <code>required string message = 2;</code>
+     * <code>required int32 userId = 2;</code>
      */
-    public boolean hasMessage() {
+    public boolean hasUserId() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>required string message = 2;</code>
+     * <code>required int32 userId = 2;</code>
+     */
+    public int getUserId() {
+      return userId_;
+    }
+
+    public static final int MESSAGE_FIELD_NUMBER = 3;
+    private volatile java.lang.Object message_;
+    /**
+     * <code>required string message = 3;</code>
+     */
+    public boolean hasMessage() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>required string message = 3;</code>
      */
     public java.lang.String getMessage() {
       java.lang.Object ref = message_;
@@ -188,7 +218,7 @@ public final class RequestProto {
       }
     }
     /**
-     * <code>required string message = 2;</code>
+     * <code>required string message = 3;</code>
      */
     public com.google.protobuf.ByteString
         getMessageBytes() {
@@ -204,16 +234,16 @@ public final class RequestProto {
       }
     }
 
-    public static final int TYPE_FIELD_NUMBER = 3;
+    public static final int TYPE_FIELD_NUMBER = 4;
     private volatile java.lang.Object type_;
     /**
-     * <code>required string type = 3;</code>
+     * <code>required string type = 4;</code>
      */
     public boolean hasType() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
+      return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
-     * <code>required string type = 3;</code>
+     * <code>required string type = 4;</code>
      */
     public java.lang.String getType() {
       java.lang.Object ref = type_;
@@ -230,7 +260,7 @@ public final class RequestProto {
       }
     }
     /**
-     * <code>required string type = 3;</code>
+     * <code>required string type = 4;</code>
      */
     public com.google.protobuf.ByteString
         getTypeBytes() {
@@ -257,6 +287,10 @@ public final class RequestProto {
         memoizedIsInitialized = 0;
         return false;
       }
+      if (!hasUserId()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
       if (!hasMessage()) {
         memoizedIsInitialized = 0;
         return false;
@@ -276,10 +310,13 @@ public final class RequestProto {
         output.writeInt32(1, requestId_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, message_);
+        output.writeInt32(2, userId_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, type_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, message_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, type_);
       }
       unknownFields.writeTo(output);
     }
@@ -295,10 +332,14 @@ public final class RequestProto {
           .computeInt32Size(1, requestId_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, message_);
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, userId_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, type_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, message_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, type_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -320,6 +361,11 @@ public final class RequestProto {
       if (hasRequestId()) {
         result = result && (getRequestId()
             == other.getRequestId());
+      }
+      result = result && (hasUserId() == other.hasUserId());
+      if (hasUserId()) {
+        result = result && (getUserId()
+            == other.getUserId());
       }
       result = result && (hasMessage() == other.hasMessage());
       if (hasMessage()) {
@@ -345,6 +391,10 @@ public final class RequestProto {
       if (hasRequestId()) {
         hash = (37 * hash) + REQUESTID_FIELD_NUMBER;
         hash = (53 * hash) + getRequestId();
+      }
+      if (hasUserId()) {
+        hash = (37 * hash) + USERID_FIELD_NUMBER;
+        hash = (53 * hash) + getUserId();
       }
       if (hasMessage()) {
         hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
@@ -489,10 +539,12 @@ public final class RequestProto {
         super.clear();
         requestId_ = 0;
         bitField0_ = (bitField0_ & ~0x00000001);
-        message_ = "";
+        userId_ = 0;
         bitField0_ = (bitField0_ & ~0x00000002);
-        type_ = "";
+        message_ = "";
         bitField0_ = (bitField0_ & ~0x00000004);
+        type_ = "";
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
 
@@ -528,9 +580,13 @@ public final class RequestProto {
         if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
-        result.message_ = message_;
+        result.userId_ = userId_;
         if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
+        }
+        result.message_ = message_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
         }
         result.type_ = type_;
         result.bitField0_ = to_bitField0_;
@@ -585,13 +641,16 @@ public final class RequestProto {
         if (other.hasRequestId()) {
           setRequestId(other.getRequestId());
         }
+        if (other.hasUserId()) {
+          setUserId(other.getUserId());
+        }
         if (other.hasMessage()) {
-          bitField0_ |= 0x00000002;
+          bitField0_ |= 0x00000004;
           message_ = other.message_;
           onChanged();
         }
         if (other.hasType()) {
-          bitField0_ |= 0x00000004;
+          bitField0_ |= 0x00000008;
           type_ = other.type_;
           onChanged();
         }
@@ -603,6 +662,9 @@ public final class RequestProto {
       @java.lang.Override
       public final boolean isInitialized() {
         if (!hasRequestId()) {
+          return false;
+        }
+        if (!hasUserId()) {
           return false;
         }
         if (!hasMessage()) {
@@ -666,15 +728,47 @@ public final class RequestProto {
         return this;
       }
 
-      private java.lang.Object message_ = "";
+      private int userId_ ;
       /**
-       * <code>required string message = 2;</code>
+       * <code>required int32 userId = 2;</code>
        */
-      public boolean hasMessage() {
+      public boolean hasUserId() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>required string message = 2;</code>
+       * <code>required int32 userId = 2;</code>
+       */
+      public int getUserId() {
+        return userId_;
+      }
+      /**
+       * <code>required int32 userId = 2;</code>
+       */
+      public Builder setUserId(int value) {
+        bitField0_ |= 0x00000002;
+        userId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 userId = 2;</code>
+       */
+      public Builder clearUserId() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        userId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object message_ = "";
+      /**
+       * <code>required string message = 3;</code>
+       */
+      public boolean hasMessage() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required string message = 3;</code>
        */
       public java.lang.String getMessage() {
         java.lang.Object ref = message_;
@@ -691,7 +785,7 @@ public final class RequestProto {
         }
       }
       /**
-       * <code>required string message = 2;</code>
+       * <code>required string message = 3;</code>
        */
       public com.google.protobuf.ByteString
           getMessageBytes() {
@@ -707,36 +801,36 @@ public final class RequestProto {
         }
       }
       /**
-       * <code>required string message = 2;</code>
+       * <code>required string message = 3;</code>
        */
       public Builder setMessage(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000002;
+  bitField0_ |= 0x00000004;
         message_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>required string message = 2;</code>
+       * <code>required string message = 3;</code>
        */
       public Builder clearMessage() {
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000004);
         message_ = getDefaultInstance().getMessage();
         onChanged();
         return this;
       }
       /**
-       * <code>required string message = 2;</code>
+       * <code>required string message = 3;</code>
        */
       public Builder setMessageBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000002;
+  bitField0_ |= 0x00000004;
         message_ = value;
         onChanged();
         return this;
@@ -744,13 +838,13 @@ public final class RequestProto {
 
       private java.lang.Object type_ = "";
       /**
-       * <code>required string type = 3;</code>
+       * <code>required string type = 4;</code>
        */
       public boolean hasType() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
-       * <code>required string type = 3;</code>
+       * <code>required string type = 4;</code>
        */
       public java.lang.String getType() {
         java.lang.Object ref = type_;
@@ -767,7 +861,7 @@ public final class RequestProto {
         }
       }
       /**
-       * <code>required string type = 3;</code>
+       * <code>required string type = 4;</code>
        */
       public com.google.protobuf.ByteString
           getTypeBytes() {
@@ -783,36 +877,36 @@ public final class RequestProto {
         }
       }
       /**
-       * <code>required string type = 3;</code>
+       * <code>required string type = 4;</code>
        */
       public Builder setType(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000004;
+  bitField0_ |= 0x00000008;
         type_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>required string type = 3;</code>
+       * <code>required string type = 4;</code>
        */
       public Builder clearType() {
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000008);
         type_ = getDefaultInstance().getType();
         onChanged();
         return this;
       }
       /**
-       * <code>required string type = 3;</code>
+       * <code>required string type = 4;</code>
        */
       public Builder setTypeBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000004;
+  bitField0_ |= 0x00000008;
         type_ = value;
         onChanged();
         return this;
@@ -884,9 +978,10 @@ public final class RequestProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\rRequest.proto\";\n\007Request\022\021\n\trequestId\030" +
-      "\001 \002(\005\022\017\n\007message\030\002 \002(\t\022\014\n\004type\030\003 \002(\tB\033\n\013" +
-      "lossp.protoB\014RequestProto"
+      "\n\rRequest.proto\"K\n\007Request\022\021\n\trequestId\030" +
+      "\001 \002(\005\022\016\n\006userId\030\002 \002(\005\022\017\n\007message\030\003 \002(\t\022\014" +
+      "\n\004type\030\004 \002(\tB\033\n\013lossp.protoB\014RequestProt" +
+      "o"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -905,7 +1000,7 @@ public final class RequestProto {
     internal_static_Request_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Request_descriptor,
-        new java.lang.String[] { "RequestId", "Message", "Type", });
+        new java.lang.String[] { "RequestId", "UserId", "Message", "Type", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

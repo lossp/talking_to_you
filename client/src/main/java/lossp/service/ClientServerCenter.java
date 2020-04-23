@@ -9,7 +9,7 @@ public interface ClientServerCenter {
 
     public void close();
 
-    public void sendMessage(String message);
+    public void sendMessage(String message, Long receiveUserId);
 
     public ServerResponseVO userLogin(String username, Long userId);
 }
