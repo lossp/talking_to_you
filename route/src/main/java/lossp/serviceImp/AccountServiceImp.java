@@ -43,6 +43,7 @@ public class AccountServiceImp implements AccountService {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("message", userId + ":" + groupMessage.getMessage());
         jsonObject.put("userId", groupMessage.getUserId());
+        jsonObject.put("receivedUserId", groupMessage.getReceivedUserId());
         RequestBody requestBody = RequestBody.create(mediaType, jsonObject.toString());
 
         Request request = new Request.Builder()

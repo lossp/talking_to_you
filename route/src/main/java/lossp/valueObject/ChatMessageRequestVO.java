@@ -1,20 +1,31 @@
 package lossp.valueObject;
 
 public class ChatMessageRequestVO {
-    private long userId;
+    private Long userId;
     private String message;
+    private Long receivedUserId;
 
-    public ChatMessageRequestVO(long userId, String message) {
+
+    public ChatMessageRequestVO(Long userId, String message, Long receivedUserId) {
         this.userId = userId;
         this.message = message;
+        this.receivedUserId = receivedUserId;
     }
 
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getReceivedUserId() {
+        return receivedUserId;
+    }
+
+    public void setReceivedUserId(Long receivedUserId) {
+        this.receivedUserId = receivedUserId;
     }
 
     public String getMessage() {
@@ -27,6 +38,6 @@ public class ChatMessageRequestVO {
 
     @Override
     public String toString() {
-        return "ChatMessageRequestVO:[ userId = " + userId + " ,message = " + message + "]";
+        return "ChatMessageRequestVO:[ userId = " + userId + " ,received user id = " + receivedUserId + " ,message = " + message + "]";
     }
 }

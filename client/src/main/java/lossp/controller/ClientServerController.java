@@ -56,6 +56,7 @@ public class ClientServerController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/p2pMessage")
     public BaseResponse<NULLBody> sendP2PMessage(@RequestBody P2PMessageRequestVO p2PMessageRequestVO) {
+        logger.info("p2PMessageRequestVO = [{}]", p2PMessageRequestVO);
         BaseResponse<NULLBody> response = new BaseResponse<>();
         try {
             routeRequest.sendP2PMessage(p2PMessageRequestVO);

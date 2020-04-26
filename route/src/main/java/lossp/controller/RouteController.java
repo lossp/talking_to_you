@@ -48,7 +48,8 @@ public class RouteController {
         ServerResponseVO serverResponseVO = accountService.loadServerByUserId(p2pRequestVO.getReceivedUserId());
         String url = "http://" + serverResponseVO.getIp() + ":" + serverResponseVO.getHttpPort() + "/sendMessage";
         // TODO 2. 推送消息
-        ChatMessageRequestVO chatMessageRequestVO = new ChatMessageRequestVO(p2pRequestVO.getReceivedUserId(), p2pRequestVO.getMessage());
+        ChatMessageRequestVO chatMessageRequestVO = new ChatMessageRequestVO(p2pRequestVO.getUserId(), p2pRequestVO.getMessage(), p2pRequestVO.getReceivedUserId());
+        logger.info("chatMessageRequestVO = [{}]", chatMessageRequestVO);
         accountService.messagePush(url,p2pRequestVO.getUserId(), chatMessageRequestVO );
         response.setCode("SUCCESS");
         response.setMessage("p2p发送消息成功");

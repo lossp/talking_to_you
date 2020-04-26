@@ -1,9 +1,15 @@
 package lossp.valueObject;
 
 public class P2PMessageRequestVO {
-    private long userId;
-    private long receivedUserId;
+    private Long userId;
+    private Long receivedUserId;
     private String message;
+
+    public P2PMessageRequestVO(Long userId, Long receivedUserId, String message) {
+        this.userId = userId;
+        this.receivedUserId = receivedUserId;
+        this.message = message;
+    }
 
     public long getUserId() {
         return userId;

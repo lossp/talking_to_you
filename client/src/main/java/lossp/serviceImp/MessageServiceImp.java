@@ -13,7 +13,6 @@ public class MessageServiceImp implements MessageService {
     Logger logger = LoggerFactory.getLogger(MessageServiceImp.class);
     //TODO 需要加入客户信息
 
-
     @Override
     public void sendMessage(String message, SocketChannel socketChannel, Long userId, Long receiveUserId) {
         RequestProto.Request.Builder msg = RequestProto.Request.newBuilder();

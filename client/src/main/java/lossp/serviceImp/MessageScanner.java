@@ -24,7 +24,6 @@ public class MessageScanner implements Runnable {
     @Override
     public void run() {
         Scanner in = new Scanner(System.in);
-        in.nextLine();
         while (true) {
             String msg = in.nextLine();
             if (msg.equals("LOSSP")) break;
