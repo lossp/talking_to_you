@@ -4,13 +4,12 @@ import io.netty.channel.*;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import lossp.proto.RequestProto;
 import lossp.session.SessionHolder;
+import lossp.valueObject.UserInfo;
 import okhttp3.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @ChannelHandler.Sharable
-// TODO 需要将ByteBuf指定为更加明确的消息VO，目前仅仅是填充逻辑代码，此部分需要优化
-// TODO 此部分需要引入protobuf... 或者定义统一的消息接口。
 public class ServerHandler extends SimpleChannelInboundHandler<RequestProto.Request> {
     Logger logger = LoggerFactory.getLogger(ServerHandler.class);
 
@@ -31,6 +30,22 @@ public class ServerHandler extends SimpleChannelInboundHandler<RequestProto.Requ
 
         context.write(in);
         // TODO 填充存入
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext context) throws Exception{
+        logger.info("Client disconnecting ... ...");
+        logger.info("current channel is [{}]", context.channel());
+        logger.info("before Session map = [{}]", SessionHolder.printSessionMap());
+        logger.info("before Channel map = [{}]", SessionHolder.printChannelMap());
+        UserInfo userInfo = SessionHolder.getUserInfo((NioSocketChannel) context.channel());
+        if (userInfo != null) {
+            logger.info("client [{}] is offline", userInfo.getUsername());
+            SessionHolder.removeSession(userInfo.getUserId());
+            SessionHolder.removeChannle((NioSocketChannel) context.channel());
+            logger.info("after Session map = [{}]", SessionHolder.printSessionMap());
+            logger.info("after Channel map = [{}]", SessionHolder.printChannelMap());
+        }
     }
 
 
