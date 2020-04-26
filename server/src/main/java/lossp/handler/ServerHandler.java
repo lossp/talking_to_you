@@ -42,7 +42,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<RequestProto.Requ
         if (userInfo != null) {
             logger.info("client [{}] is offline", userInfo.getUsername());
             SessionHolder.removeSession(userInfo.getUserId());
-            SessionHolder.removeChannle((NioSocketChannel) context.channel());
+            SessionHolder.removeChannel((NioSocketChannel) context.channel());
             logger.info("after Session map = [{}]", SessionHolder.printSessionMap());
             logger.info("after Channel map = [{}]", SessionHolder.printChannelMap());
         }

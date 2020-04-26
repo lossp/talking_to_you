@@ -62,7 +62,7 @@ public class SessionHolder {
         return stringBuilder.toString();
     }
 
-    public static void removeChannle(NioSocketChannel socketChannel) {
+    public static void removeChannel(NioSocketChannel socketChannel) {
         CHANNEL_MAP.entrySet().stream().filter(entry -> entry.getValue() == socketChannel).forEach(entry -> CHANNEL_MAP.remove(entry.getKey()));
     }
 
