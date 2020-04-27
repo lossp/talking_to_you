@@ -9,13 +9,11 @@ import java.util.Scanner;
 
 public class MessageScanner implements Runnable {
     private MessageService messageService;
-    private SocketChannel socketChannel;
     private Long userId;
     private Long receiveUserId;
 
     public MessageScanner(SocketChannel socketChannel, Long userId, Long receiveUserId) {
-        this.messageService = new MessageServiceImp();
-        this.socketChannel = socketChannel;
+        this.messageService = new MessageServiceImp(socketChannel);
         this.userId = userId;
         this.receiveUserId = receiveUserId;
     }
@@ -27,7 +25,7 @@ public class MessageScanner implements Runnable {
         while (true) {
             String msg = in.nextLine();
             if (msg.equals("LOSSP")) break;
-            messageService.sendMessage(msg, socketChannel, userId, receiveUserId);
+            messageService.sendMessage(msg, userId, receiveUserId);
         }
     }
 }

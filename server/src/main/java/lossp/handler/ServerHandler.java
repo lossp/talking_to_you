@@ -18,10 +18,14 @@ public class ServerHandler extends SimpleChannelInboundHandler<RequestProto.Requ
     @Override
     protected void channelRead0(ChannelHandlerContext context, RequestProto.Request in) {
         logger.info("Receiving message = [{}], type = [{}], receive userId = [{}],  user id = [{}]", in.getMessage(), in.getType(), in.getRequestId(), in.getUserId());
-        if (!in.getType().equals("PING")) {
+        if (in.getType().equals("LOGIN")) {
             SessionHolder.saveChannel(Long.valueOf(in.getRequestId()), (NioSocketChannel) context.channel());
             SessionHolder.saveSession(Long.valueOf(in.getRequestId()), in.getMessage());
             logger.info("client [{}] online success", in.getUserId());
+        }
+
+        if (in.getType().equals("MSG")) {
+
         }
 
         if (in.getType().equals("PING")) {

@@ -8,6 +8,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import lossp.handler.ClientHandlerInitializer;
 import lossp.service.ClientServerCenter;
+import lossp.service.MessageService;
 import lossp.service.RouteRequest;
 import lossp.valueObject.LoginRequestVO;
 
@@ -25,6 +26,8 @@ public class ClientServerImp implements ClientServerCenter {
     Logger logger = LoggerFactory.getLogger(ClientServerImp.class);
     private SocketChannel channel;
     private Long userId;
+    private String username;
+    private boolean connectServer = false;
 
     @Autowired
     private RouteRequest routeRequest;
@@ -32,16 +35,7 @@ public class ClientServerImp implements ClientServerCenter {
     private ServerResponseVO serverResponseVO;
 
     @Override
-    public void start() {
-        try {
-            if (serverResponseVO == null) throw new IllegalArgumentException("Server info needs to initialized first, please login in");
-            startClient(serverResponseVO);
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            logger.error("连接客户端失败");
-        }
-
-    }
+    public boolean getConnectServer() { return connectServer; }
 
 
     private void startClient(ServerResponseVO serverInfo) throws Exception {
@@ -55,7 +49,13 @@ public class ClientServerImp implements ClientServerCenter {
         // TODO this line here is very very important
         ChannelFuture future = bootstrap.connect().sync();
         channel = (SocketChannel) future.channel();
-//        this.sendMessage();
+        connectServer = true;
+        sendLoginRequest();
+    }
+
+    private void sendLoginRequest() {
+        MessageService messageService = new MessageServiceImp(channel);
+        messageService.sendLoginRequest(userId, username);
     }
 
     @Override
@@ -66,7 +66,8 @@ public class ClientServerImp implements ClientServerCenter {
     }
 
     @Override
-    public void close() {
+    public void logout() {
+
     }
 
 
@@ -77,11 +78,15 @@ public class ClientServerImp implements ClientServerCenter {
             serverInfo = routeRequest.getServer(loginRequestVO);
             serverResponseVO = serverInfo;
             this.userId = userId;
+            this.username = userName;
+            startClient(serverInfo);
             return serverInfo;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
+
+
 
 }

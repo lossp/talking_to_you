@@ -25,9 +25,8 @@ public class ClientServerController {
     @RequestMapping(method = RequestMethod.POST, value = "/sendMessage")
     public BaseResponse<NULLBody> sendMessage(@RequestBody StringRequestVO stringRequestVO) throws Exception {
         BaseResponse<NULLBody> response = new BaseResponse<>();
-        clientServerImp.start();
+        if (!clientServerImp.getConnectServer()) throw new IllegalAccessException("没有连接到服务器，无法发送消息");
         clientServerImp.sendMessage(stringRequestVO.getMessage(), stringRequestVO.getReceiveUserId());
-
         response.setMessage("message sent successfully");
         response.setCode("SUCCESS");
         return response;

@@ -5,11 +5,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface ClientServerCenter {
-    public void start() throws Exception;
-
-    public void close();
+    public void logout();
 
     public void sendMessage(String message, Long receiveUserId);
 
     public ServerResponseVO userLogin(String username, Long userId);
+
+    public boolean getConnectServer();
 }

@@ -5,9 +5,11 @@ import lossp.message.Message;
 
 
 public interface MessageService {
-    public void sendMessage(String message, SocketChannel socketChannel, Long userId, Long receiveUserId);
+    public void sendLoginRequest(Long userId, String username);
 
-    public void sendGroupMessage(Message message, SocketChannel socketChannel);
+    public void sendMessage(String message, Long userId, Long receiveUserId);
+
+    public void sendGroupMessage(Message message);
 
     public void close();
 }
