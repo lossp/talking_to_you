@@ -12,4 +12,8 @@ public interface MessageService {
     public void sendGroupMessage(Message message);
 
     public void close();
+
+    public boolean checkMessage(String message);
+
+    public boolean innerCommand(String message);
 }

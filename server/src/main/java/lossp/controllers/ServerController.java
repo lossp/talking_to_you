@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.LinkedList;
 
 @RestController
 public class ServerController {
@@ -21,7 +20,7 @@ public class ServerController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String hello() {
-        logger.info("Enterring");
+        logger.info("Entering");
         logger.info("Server status: " + serverImp.isRunning());
         return "Hello";
     }

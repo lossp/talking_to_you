@@ -54,13 +54,13 @@ public class ClientServerImp implements ClientServerCenter {
     }
 
     private void sendLoginRequest() {
-        MessageService messageService = new MessageServiceImp(channel);
+        MessageService messageService = new MessageServiceImp(channel, routeRequest);
         messageService.sendLoginRequest(userId, username);
     }
 
     @Override
     public void sendMessage(String message, Long receiveUserId) {
-        MessageScanner messageScanner = new MessageScanner(channel, userId, username, receiveUserId);
+        MessageScanner messageScanner = new MessageScanner(channel, userId, username, receiveUserId, routeRequest);
         Thread thread = new Thread(messageScanner);
         thread.start();
     }

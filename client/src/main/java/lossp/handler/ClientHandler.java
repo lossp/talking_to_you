@@ -3,7 +3,6 @@ package lossp.handler;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import lossp.message.Message;
 import lossp.proto.RequestProto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

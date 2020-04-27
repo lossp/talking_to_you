@@ -6,29 +6,32 @@ import io.netty.channel.socket.SocketChannel;
 import lossp.message.Message;
 import lossp.proto.RequestProto;
 import lossp.service.MessageService;
+import lossp.service.RouteRequest;
+import lossp.valueObject.P2PMessageRequestVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 public class MessageServiceImp implements MessageService {
     Logger logger = LoggerFactory.getLogger(MessageServiceImp.class);
     //TODO 需要加入客户信息
     private SocketChannel socketChannel;
+    private RouteRequest routeRequest;
 
-    public MessageServiceImp(SocketChannel socketChannel) {
+    public MessageServiceImp(SocketChannel socketChannel, RouteRequest routeRequest) {
         this.socketChannel = socketChannel;
+        this.routeRequest = routeRequest;
     }
 
     @Override
     public void sendMessage(String message, Long userId, String username, Long receiveUserId) {
-        RequestProto.Request.Builder msg = RequestProto.Request.newBuilder();
-        msg.setRequestId((int) receiveUserId.longValue());
-        msg.setUserId((int) userId.longValue());
-        msg.setMessage(message);
-        msg.setUsername(username);
-        msg.setType("MSG");
-
-        ChannelFuture future = socketChannel.writeAndFlush(msg);
-        future.addListener((ChannelFutureListener) channelFuture -> logger.info("客户端手动发消息成功={}", msg));
+        P2PMessageRequestVO p2PMessageRequestVO = new P2PMessageRequestVO(userId, receiveUserId, message);
+        try {
+            routeRequest.sendP2PMessage(p2PMessageRequestVO);
+            logger.info("Sending...");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -56,5 +59,18 @@ public class MessageServiceImp implements MessageService {
     @Override
     public void close() {
 
+    }
+
+    @Override
+    public boolean checkMessage(String message) {
+        if (message.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean innerCommand(String message) {
+        return true;
     }
 }

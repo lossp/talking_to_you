@@ -74,15 +74,15 @@ public class ServerImp implements Server {
     public P2PMessageResponseVO sendP2PMessage(P2PMessageRequestVO p2PMessageRequestVO) {
         String result = SessionHolder.printChannelMap();
         logger.info(result);
-        NioSocketChannel nioSocketChannel = SessionHolder.getChannel(p2PMessageRequestVO.getUserId());
+        NioSocketChannel nioSocketChannel = SessionHolder.getChannel(p2PMessageRequestVO.getReceivedUserId());
         // 构造protobuf
         RequestProto.Request.Builder msg = RequestProto.Request.newBuilder();
         msg.setRequestId((int) p2PMessageRequestVO.getReceivedUserId().longValue());
         msg.setUserId((int) p2PMessageRequestVO.getUserId().longValue());
         msg.setMessage(p2PMessageRequestVO.getMessage());
         msg.setType("MSG");
-
-
+        // TODO 需要设置username 信息才能发送成功!!!
+        msg.setUsername("fucker");
         if (nioSocketChannel == null) throw new IllegalArgumentException("该用户对应的channel不存在");
         ChannelFuture future = nioSocketChannel.writeAndFlush(msg);
         future.addListener((ChannelFutureListener) channelFuture -> logger.info("server push msg:[{}]", p2PMessageRequestVO.toString()));
