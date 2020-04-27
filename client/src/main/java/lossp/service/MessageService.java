@@ -7,7 +7,7 @@ import lossp.message.Message;
 public interface MessageService {
     public void sendLoginRequest(Long userId, String username);
 
-    public void sendMessage(String message, Long userId, Long receiveUserId);
+    public void sendMessage(String message, Long userId, String username, Long receiveUserId);
 
     public void sendGroupMessage(Message message);
 

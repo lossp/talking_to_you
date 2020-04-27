@@ -60,7 +60,7 @@ public class ClientServerImp implements ClientServerCenter {
 
     @Override
     public void sendMessage(String message, Long receiveUserId) {
-        MessageScanner messageScanner = new MessageScanner(channel, userId, receiveUserId);
+        MessageScanner messageScanner = new MessageScanner(channel, userId, username, receiveUserId);
         Thread thread = new Thread(messageScanner);
         thread.start();
     }

@@ -63,6 +63,20 @@ public final class RequestProto {
      */
     com.google.protobuf.ByteString
         getTypeBytes();
+
+    /**
+     * <code>required string username = 5;</code>
+     */
+    boolean hasUsername();
+    /**
+     * <code>required string username = 5;</code>
+     */
+    java.lang.String getUsername();
+    /**
+     * <code>required string username = 5;</code>
+     */
+    com.google.protobuf.ByteString
+        getUsernameBytes();
   }
   /**
    * Protobuf type {@code Request}
@@ -81,6 +95,7 @@ public final class RequestProto {
       userId_ = 0;
       message_ = "";
       type_ = "";
+      username_ = "";
     }
 
     @java.lang.Override
@@ -127,6 +142,12 @@ public final class RequestProto {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000008;
               type_ = bs;
+              break;
+            }
+            case 42: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000010;
+              username_ = bs;
               break;
             }
             default: {
@@ -276,6 +297,48 @@ public final class RequestProto {
       }
     }
 
+    public static final int USERNAME_FIELD_NUMBER = 5;
+    private volatile java.lang.Object username_;
+    /**
+     * <code>required string username = 5;</code>
+     */
+    public boolean hasUsername() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    /**
+     * <code>required string username = 5;</code>
+     */
+    public java.lang.String getUsername() {
+      java.lang.Object ref = username_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          username_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string username = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getUsernameBytes() {
+      java.lang.Object ref = username_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        username_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -299,6 +362,10 @@ public final class RequestProto {
         memoizedIsInitialized = 0;
         return false;
       }
+      if (!hasUsername()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -317,6 +384,9 @@ public final class RequestProto {
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 4, type_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, username_);
       }
       unknownFields.writeTo(output);
     }
@@ -340,6 +410,9 @@ public final class RequestProto {
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, type_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, username_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -377,6 +450,11 @@ public final class RequestProto {
         result = result && getType()
             .equals(other.getType());
       }
+      result = result && (hasUsername() == other.hasUsername());
+      if (hasUsername()) {
+        result = result && getUsername()
+            .equals(other.getUsername());
+      }
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -403,6 +481,10 @@ public final class RequestProto {
       if (hasType()) {
         hash = (37 * hash) + TYPE_FIELD_NUMBER;
         hash = (53 * hash) + getType().hashCode();
+      }
+      if (hasUsername()) {
+        hash = (37 * hash) + USERNAME_FIELD_NUMBER;
+        hash = (53 * hash) + getUsername().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -545,6 +627,8 @@ public final class RequestProto {
         bitField0_ = (bitField0_ & ~0x00000004);
         type_ = "";
         bitField0_ = (bitField0_ & ~0x00000008);
+        username_ = "";
+        bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
 
@@ -589,6 +673,10 @@ public final class RequestProto {
           to_bitField0_ |= 0x00000008;
         }
         result.type_ = type_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        result.username_ = username_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -654,6 +742,11 @@ public final class RequestProto {
           type_ = other.type_;
           onChanged();
         }
+        if (other.hasUsername()) {
+          bitField0_ |= 0x00000010;
+          username_ = other.username_;
+          onChanged();
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -671,6 +764,9 @@ public final class RequestProto {
           return false;
         }
         if (!hasType()) {
+          return false;
+        }
+        if (!hasUsername()) {
           return false;
         }
         return true;
@@ -911,6 +1007,82 @@ public final class RequestProto {
         onChanged();
         return this;
       }
+
+      private java.lang.Object username_ = "";
+      /**
+       * <code>required string username = 5;</code>
+       */
+      public boolean hasUsername() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      /**
+       * <code>required string username = 5;</code>
+       */
+      public java.lang.String getUsername() {
+        java.lang.Object ref = username_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            username_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string username = 5;</code>
+       */
+      public com.google.protobuf.ByteString
+          getUsernameBytes() {
+        java.lang.Object ref = username_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          username_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string username = 5;</code>
+       */
+      public Builder setUsername(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        username_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string username = 5;</code>
+       */
+      public Builder clearUsername() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        username_ = getDefaultInstance().getUsername();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string username = 5;</code>
+       */
+      public Builder setUsernameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        username_ = value;
+        onChanged();
+        return this;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -978,10 +1150,10 @@ public final class RequestProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\rRequest.proto\"K\n\007Request\022\021\n\trequestId\030" +
+      "\n\rRequest.proto\"]\n\007Request\022\021\n\trequestId\030" +
       "\001 \002(\005\022\016\n\006userId\030\002 \002(\005\022\017\n\007message\030\003 \002(\t\022\014" +
-      "\n\004type\030\004 \002(\tB\033\n\013lossp.protoB\014RequestProt" +
-      "o"
+      "\n\004type\030\004 \002(\t\022\020\n\010username\030\005 \002(\tB\033\n\013lossp." +
+      "protoB\014RequestProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1000,7 +1172,7 @@ public final class RequestProto {
     internal_static_Request_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Request_descriptor,
-        new java.lang.String[] { "RequestId", "UserId", "Message", "Type", });
+        new java.lang.String[] { "RequestId", "UserId", "Message", "Type", "Username", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

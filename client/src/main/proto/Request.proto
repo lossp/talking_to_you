@@ -5,4 +5,5 @@ message Request {
     required int32 userId = 2;
     required string message = 3;
     required string type = 4;
+    required string username = 5;
 }

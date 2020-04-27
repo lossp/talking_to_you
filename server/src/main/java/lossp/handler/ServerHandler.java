@@ -19,8 +19,9 @@ public class ServerHandler extends SimpleChannelInboundHandler<RequestProto.Requ
     protected void channelRead0(ChannelHandlerContext context, RequestProto.Request in) {
         logger.info("Receiving message = [{}], type = [{}], receive userId = [{}],  user id = [{}]", in.getMessage(), in.getType(), in.getRequestId(), in.getUserId());
         if (in.getType().equals("LOGIN")) {
-            SessionHolder.saveChannel(Long.valueOf(in.getRequestId()), (NioSocketChannel) context.channel());
-            SessionHolder.saveSession(Long.valueOf(in.getRequestId()), in.getMessage());
+            SessionHolder.saveChannel(Long.valueOf(in.getUserId()), (NioSocketChannel) context.channel());
+            SessionHolder.saveSession(Long.valueOf(in.getUserId()), in.getUsername());
+            logger.info("session = [{}]", SessionHolder.printSessionMap());
             logger.info("client [{}] online success", in.getUserId());
         }
 

@@ -19,11 +19,12 @@ public class MessageServiceImp implements MessageService {
     }
 
     @Override
-    public void sendMessage(String message, Long userId, Long receiveUserId) {
+    public void sendMessage(String message, Long userId, String username, Long receiveUserId) {
         RequestProto.Request.Builder msg = RequestProto.Request.newBuilder();
         msg.setRequestId((int) receiveUserId.longValue());
         msg.setUserId((int) userId.longValue());
         msg.setMessage(message);
+        msg.setUsername(username);
         msg.setType("MSG");
 
         ChannelFuture future = socketChannel.writeAndFlush(msg);
@@ -41,7 +42,8 @@ public class MessageServiceImp implements MessageService {
         msg.setUserId((int) userId.longValue());
         // 登陆时候将username作为message，之后需要进行重构，单独增加username字段，目前为了功能，只能将就了
         // TODO 重构
-        msg.setMessage(username);
+        msg.setMessage("");
+        msg.setUsername(username);
         // 没有指定用户，默认request id为0
         msg.setRequestId(0);
         msg.setType("LOGIN");
