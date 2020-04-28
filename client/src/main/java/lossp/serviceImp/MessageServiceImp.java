@@ -25,7 +25,7 @@ public class MessageServiceImp implements MessageService {
 
     @Override
     public void sendMessage(String message, Long userId, String username, Long receiveUserId) {
-        P2PMessageRequestVO p2PMessageRequestVO = new P2PMessageRequestVO(userId, receiveUserId, message);
+        P2PMessageRequestVO p2PMessageRequestVO = new P2PMessageRequestVO(userId, receiveUserId, message, username);
         try {
             routeRequest.sendP2PMessage(p2PMessageRequestVO);
             logger.info("Sending...");

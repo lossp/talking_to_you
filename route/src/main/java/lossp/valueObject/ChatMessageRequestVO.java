@@ -4,12 +4,22 @@ public class ChatMessageRequestVO {
     private Long userId;
     private String message;
     private Long receivedUserId;
+    private String username;
 
 
-    public ChatMessageRequestVO(Long userId, String message, Long receivedUserId) {
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public ChatMessageRequestVO(Long userId, String message, Long receivedUserId, String username) {
         this.userId = userId;
         this.message = message;
         this.receivedUserId = receivedUserId;
+        this.username = username;
     }
 
     public Long getUserId() {
@@ -38,6 +48,6 @@ public class ChatMessageRequestVO {
 
     @Override
     public String toString() {
-        return "ChatMessageRequestVO:[ userId = " + userId + " ,received user id = " + receivedUserId + " ,message = " + message + "]";
+        return "ChatMessageRequestVO:[ userId = " + userId + " ,username = " + username +" ,received user id = " + receivedUserId + " ,message = " + message + "]";
     }
 }

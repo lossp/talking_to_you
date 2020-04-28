@@ -4,6 +4,15 @@ public class P2PRequestVO {
     private Long userId;
     private Long receivedUserId;
     private String message;
+    private String username;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public Long getUserId() {
         return userId;
@@ -31,6 +40,6 @@ public class P2PRequestVO {
 
     @Override
     public String toString() {
-        return "P2PRequestVO: [ userId = " + userId + " ,receive userId = " + receivedUserId + " ,message = " +message +"]";
+        return "P2PRequestVO: [ userId = " + userId + " ,username = " + username + " ,receive userId = " + receivedUserId + " ,message = " +message +"]";
     }
 }

@@ -34,6 +34,7 @@ public class RouteRequestImp implements RouteRequest {
         jsonObject.put("message", p2PMessageRequestVO.getMessage());
         jsonObject.put("userId", p2PMessageRequestVO.getUserId());
         jsonObject.put("receivedUserId", p2PMessageRequestVO.getReceivedUserId());
+        jsonObject.put("username", p2PMessageRequestVO.getUsername());
         logger.info("the json Object = [{}]", jsonObject);
         RequestBody requestBody = RequestBody.create(mediaType, jsonObject.toJSONString());
         Request request = new Request.Builder().url(p2pRouteRequestUrl).post(requestBody).build();

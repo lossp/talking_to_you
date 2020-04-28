@@ -41,9 +41,10 @@ public class AccountServiceImp implements AccountService {
     @Override
     public void messagePush(String url, Long userId, ChatMessageRequestVO groupMessage) throws Exception {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("message", userId + ":" + groupMessage.getMessage());
+        jsonObject.put("message", groupMessage.getMessage());
         jsonObject.put("userId", groupMessage.getUserId());
         jsonObject.put("receivedUserId", groupMessage.getReceivedUserId());
+        jsonObject.put("username", groupMessage.getUsername());
         RequestBody requestBody = RequestBody.create(mediaType, jsonObject.toString());
 
         Request request = new Request.Builder()

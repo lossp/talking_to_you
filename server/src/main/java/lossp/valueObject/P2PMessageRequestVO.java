@@ -4,11 +4,21 @@ public class P2PMessageRequestVO {
     private Long userId;
     private String message;
     private Long receivedUserId;
+    private String username;
 
-    public P2PMessageRequestVO(Long userId, String message, Long receivedUserId) {
+    public P2PMessageRequestVO(Long userId, String message, Long receivedUserId, String username) {
         this.userId = userId;
         this.message = message;
         this.receivedUserId = receivedUserId;
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Long getReceivedUserId() {
@@ -37,6 +47,6 @@ public class P2PMessageRequestVO {
 
     @Override
     public String toString() {
-        return "P2PMessageRequestVO = [ message = " + message + " ,receive user id = " + receivedUserId + " ,user id = " + userId + " ]";
+        return "P2PMessageRequestVO = [ message = " + message + " ,username = " + username + " ,receive user id = " + receivedUserId + " ,user id = " + userId + " ]";
     }
 }
