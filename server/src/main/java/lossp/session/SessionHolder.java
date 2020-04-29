@@ -44,7 +44,7 @@ public class SessionHolder {
             Map.Entry<Long, NioSocketChannel> entry = iterator.next();
             long userId = entry.getKey().longValue();
             NioSocketChannel channel = entry.getValue();
-            stringBuilder.append("id = " + userId + " , channel = " + channel);
+            stringBuilder.append("{ id = " + userId + " , channel = " + channel + "} ");
         }
         return stringBuilder.toString();
     }
@@ -57,7 +57,7 @@ public class SessionHolder {
             Map.Entry<Long, String> entry = iterator.next();
             long userId = entry.getKey().longValue();
             String username = entry.getValue();
-            stringBuilder.append("id = " + userId + " , username = " + username);
+            stringBuilder.append("{id = " + userId + " , username = " + username + "} ");
         }
         return stringBuilder.toString();
     }

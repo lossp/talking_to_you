@@ -30,6 +30,7 @@ public class MessageServiceImp implements MessageService {
             routeRequest.sendP2PMessage(p2PMessageRequestVO);
             logger.info("Sending...");
         } catch (Exception e) {
+            logger.error("信息发送失败......");
             e.printStackTrace();
         }
     }

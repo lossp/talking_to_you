@@ -22,6 +22,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.net.InetSocketAddress;
+import java.util.NoSuchElementException;
 
 @Component
 public class ServerImp implements Server {
@@ -82,7 +83,7 @@ public class ServerImp implements Server {
         msg.setMessage(p2PMessageRequestVO.getMessage());
         msg.setUsername(p2PMessageRequestVO.getUsername());
         msg.setType("MSG");
-        if (nioSocketChannel == null) throw new IllegalArgumentException("该用户对应的channel不存在");
+        if (nioSocketChannel == null) throw new NoSuchElementException("该用户对应的channel不存在");
         ChannelFuture future = nioSocketChannel.writeAndFlush(msg);
         future.addListener((ChannelFutureListener) channelFuture -> logger.info("server push msg:[{}]", p2PMessageRequestVO.toString()));
         return new P2PMessageResponseVO();
