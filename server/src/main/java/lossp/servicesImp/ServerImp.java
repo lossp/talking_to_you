@@ -83,6 +83,10 @@ public class ServerImp implements Server {
         msg.setMessage(p2PMessageRequestVO.getMessage());
         msg.setUsername(p2PMessageRequestVO.getUsername());
         msg.setType("MSG");
+        //TODO
+        // 1.定制化Server端的客户找不到的相应错误码
+        // 2.定制化Route端的客户找不到的相应错误码
+        // 3.定制化Client端相应的客户找不到错误码，从而输出正常业务异常信息
         if (nioSocketChannel == null) throw new NoSuchElementException("该用户对应的channel不存在");
         ChannelFuture future = nioSocketChannel.writeAndFlush(msg);
         future.addListener((ChannelFutureListener) channelFuture -> logger.info("server push msg:[{}]", p2PMessageRequestVO.toString()));
