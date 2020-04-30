@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 
 public interface RouteRequest {
-    public void sendP2PMessage(P2PMessageRequestVO p2PMessageRequestVO) throws Exception;
+    public String sendP2PMessage(P2PMessageRequestVO p2PMessageRequestVO) throws Exception;
 
     public void sendGroupMessage(GroupMessageRequestVO groupMessageRequestVO);
 

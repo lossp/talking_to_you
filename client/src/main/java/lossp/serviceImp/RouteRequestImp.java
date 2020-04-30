@@ -29,7 +29,7 @@ public class RouteRequestImp implements RouteRequest {
     private String userLoginRouteUrl;
 
     @Override
-    public void sendP2PMessage(P2PMessageRequestVO p2PMessageRequestVO) throws Exception{
+    public String sendP2PMessage(P2PMessageRequestVO p2PMessageRequestVO) throws Exception{
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("message", p2PMessageRequestVO.getMessage());
         jsonObject.put("userId", p2PMessageRequestVO.getUserId());
@@ -48,6 +48,7 @@ public class RouteRequestImp implements RouteRequest {
         try {
             String jsonBody = body.string();
             logger.info("the json body :" + jsonBody );
+            return jsonBody;
         } finally {
             body.close();
         }

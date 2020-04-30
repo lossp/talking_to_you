@@ -39,7 +39,7 @@ public class AccountServiceImp implements AccountService {
     }
 
     @Override
-    public void messagePush(String url, Long userId, ChatMessageRequestVO groupMessage) throws Exception {
+    public String messagePush(String url, Long userId, ChatMessageRequestVO groupMessage) throws Exception {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("message", groupMessage.getMessage());
         jsonObject.put("userId", groupMessage.getUserId());
@@ -55,9 +55,10 @@ public class AccountServiceImp implements AccountService {
         Response response = okHttpClient.newCall(request).execute();
         try {
             if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-        } finally {
-            response.body().close();
+        }catch (Exception e) {
+
         }
+        return response.body().string();
     }
 
     @Override

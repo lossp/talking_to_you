@@ -50,8 +50,9 @@ public class RouteController {
         // TODO 2. 推送消息
         ChatMessageRequestVO chatMessageRequestVO = new ChatMessageRequestVO(p2pRequestVO.getUserId(), p2pRequestVO.getMessage(), p2pRequestVO.getReceivedUserId(), p2pRequestVO.getUsername());
         logger.info("chatMessageRequestVO = [{}]", chatMessageRequestVO);
-        accountService.messagePush(url,p2pRequestVO.getUserId(), chatMessageRequestVO );
-        response.setCode("SUCCESS");
+        String code = accountService.messagePush(url,p2pRequestVO.getUserId(), chatMessageRequestVO );
+        logger.info("code = [{}]", code);
+        response.setCode(code);
         response.setMessage("p2p发送消息成功");
         return response;
     }

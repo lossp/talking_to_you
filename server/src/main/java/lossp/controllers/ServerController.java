@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.NoSuchElementException;
+
 
 @RestController
 public class ServerController {
@@ -28,8 +30,12 @@ public class ServerController {
     @RequestMapping(method = RequestMethod.POST, value = "/sendMessage")
     public String sendMessage(@RequestBody P2PMessageRequestVO p2PMessageRequestVO) {
         logger.info("p2p message request = [{}]", p2PMessageRequestVO);
-        serverImp.sendP2PMessage(p2PMessageRequestVO);
-
+        try {
+            serverImp.sendP2PMessage(p2PMessageRequestVO);
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+            return "CLIENT_NOT_FOUND";
+        }
         return "OK";
     }
 }

@@ -7,7 +7,7 @@ import lossp.valueObject.ServerResponseVO;
 public interface AccountService {
     public RegisterInfoResponse register(RegisterInfoResponse info);
 
-    public void messagePush(String url, Long userId, ChatMessageRequestVO groupMessage) throws Exception;
+    public String messagePush(String url, Long userId, ChatMessageRequestVO groupMessage) throws Exception;
 
     public void offLine(Long userId) throws Exception;
 

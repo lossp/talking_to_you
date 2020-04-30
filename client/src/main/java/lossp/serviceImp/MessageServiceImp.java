@@ -1,5 +1,6 @@
 package lossp.serviceImp;
 
+import com.alibaba.fastjson.JSONObject;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.socket.SocketChannel;
@@ -27,8 +28,8 @@ public class MessageServiceImp implements MessageService {
     public void sendMessage(String message, Long userId, String username, Long receiveUserId) {
         P2PMessageRequestVO p2PMessageRequestVO = new P2PMessageRequestVO(userId, receiveUserId, message, username);
         try {
-            routeRequest.sendP2PMessage(p2PMessageRequestVO);
-            logger.info("Sending...");
+            String jsonString = routeRequest.sendP2PMessage(p2PMessageRequestVO);
+            logger.info("message sent, the response = [{}]", jsonString);
         } catch (Exception e) {
             logger.error("信息发送失败......");
             e.printStackTrace();
